@@ -2,7 +2,7 @@
   "name": "primitive-sphere",
   "version": "1.0.0",
   "description": "a sphere mesh with normals, texture coordinates and indices",
-  "main": "./primitive-uv-sphere.js",
+  "main": "./primitive-sphere.js",
   "license": "MIT",
   "author": {
     "name": "Matt DesLauriers",
@@ -10,7 +10,6 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
-    "defined": "^1.0.0",
     "gl-mat4": "^1.1.4",
     "gl-vec3": "^1.0.3"
   },
@@ -23,7 +22,7 @@
   },
   "scripts": {
     "test": "node test.js | faucet",
-    "start": "budo demo.js --live --verbose -- | garnish"
+    "start": "budo demo.js --live --verbose | garnish"
   },
   "keywords": [
     "sphere",

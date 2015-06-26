@@ -3,8 +3,9 @@ var shell = require('mesh-viewer')({
 })
 
 var mesh = require('./')(0.3, {
-  segments: 16
+  segments: 32
 })
+
 shell.on('viewer-init', function() {
   mesh = shell.createMesh({
     positions: mesh.positions,
