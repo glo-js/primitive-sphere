@@ -1,87 +1,78 @@
-var defined = require('defined')
+var identity = require('gl-mat4/identity')
+var rotateY = require('gl-mat4/rotateY')
+var rotateZ = require('gl-mat4/rotateZ')
+
+var scale = require('gl-vec3/scale')
+var transformMat4 = require('gl-vec3/transformMat4')
 var normalize = require('gl-vec3/normalize')
 
+var matRotY = identity([])
+var matRotZ = identity([])
+var up = [0, 1, 0]
+var tmpVec3 = [0, 0, 0]
+
 module.exports = primitiveSphere
-function primitiveSphere (opt) {
-  if (typeof opt === 'number') {
-    opt = { radius: opt }
-  }
-
+function primitiveSphere (radius, opt) {
   opt = opt || {}
+  radius = typeof radius !== 'undefined' ? radius : 1
+  var segments = typeof opt.segments !== 'undefined' ? opt.segments : 32
 
-  var radius = defined(opt.radius, 1)
-  var segments = defined(segments, 16)
-  if (!Array.isArray(segments)) {
-    segments = [ segments, segments ]
-  }
-  var phiStart = opt.phiStart || 0
-  var thetaStart = opt.thetaStart || 0
-  var phiLength = defined(opt.phiLength, Math.PI*2) 
-  var thetaLength = defined(opt.thetaLength, Math.PI)
+  var totalZRotationSteps = 2 + segments
+  var totalYRotationSteps = 2 * totalZRotationSteps
 
-  var segX = segments[0]
-  var segY = segments[1]
+  var indices = []
   var positions = []
   var normals = []
-  var cells = []
   var uvs = []
 
-  var vertexCellRows = []
-  var uvCellRows = []
-  var x, y
+  for (var zRotationStep = 0; zRotationStep <= totalZRotationSteps; zRotationStep++) {
+    var normalizedZ = zRotationStep / totalZRotationSteps
+    var angleZ = (normalizedZ * Math.PI)
 
-  for (y = 0; y <= segY; y++) {
-    var vertRow = []
-    var uvRow = []
-    
-    for (x=0; x<=segX; x++) {
-      var u = x / segX
-      var v = y / segY
+    for (var yRotationStep = 0; yRotationStep <= totalYRotationSteps; yRotationStep++) {
+      var normalizedY = yRotationStep / totalYRotationSteps
+      var angleY = normalizedY * Math.PI * 2
 
-      var vertex = [
-        -radius 
-          * Math.cos(phiStart + u * phiLength)
-          * Math.sin(thetaStart + v * thetaLength),
-        radius
-          * Math.cos(thetaStart + v * thetaLength),
-        radius
-          * Math.sin(phiStart + u * phiLength)
-          * Math.sin(thetaStart + v * thetaLength)
-      ]
-      positions.push(vertex)
-      normals.push(normalize([ 0, 0, 0 ], vertex))
-      uvs.push([ u, 1 - v ])
+      identity(matRotZ)
+      rotateZ(matRotZ, matRotZ, -angleZ)
 
-      vertRow.push(positions.length - 1)
+      identity(matRotY)
+      rotateY(matRotY, matRotY, angleY)
+
+      transformMat4(tmpVec3, up, matRotZ)
+      transformMat4(tmpVec3, tmpVec3, matRotY)
+
+      scale(tmpVec3, tmpVec3, radius)
+      positions.push(tmpVec3.slice())
+
+      normalize(tmpVec3, tmpVec3)
+      normals.push(tmpVec3.slice())
+
+      uvs.push([ normalizedY, normalizedZ ])
     }
 
-    vertexCellRows.push(vertRow)
-    uvCellRows.push(uvRow)
-  }
-
-  for (y = 0; y < segY; y++) {
-    for (x = 0; x < segX; x++) {
-      var v1 = vertexCellRows[ y ][ x + 1 ]
-      var v2 = vertexCellRows[ y ][ x ]
-      var v3 = vertexCellRows[ y + 1 ][ x ]
-      var v4 = vertexCellRows[ y + 1 ][ x + 1 ]
-
-      // test for poles
-      if (Math.abs(positions[v1][1] === radius)) {
-        cells.push([ v1, v3, v4 ])
-      } else if (Math.abs(positions[v3][1] === radius)) {
-        cells.push([ v1, v2, v3 ])
-      } else {
-        cells.push([v1, v2, v4])
-        cells.push([v2, v3, v4])
+    if (zRotationStep > 0) {
+      var verticesCount = positions.length
+      var firstIndex = verticesCount - 2 * (totalYRotationSteps + 1)
+      for ( ; (firstIndex + totalYRotationSteps + 2) < verticesCount; firstIndex++) {
+        indices.push([
+          firstIndex,
+          firstIndex + 1,
+          firstIndex + totalYRotationSteps + 1
+        ])
+        indices.push([
+          firstIndex + totalYRotationSteps + 1,
+          firstIndex + 1,
+          firstIndex + totalYRotationSteps + 2
+        ])
       }
     }
   }
 
   return {
-    uvs: uvs,
-    normals: normals,
+    cells: indices,
     positions: positions,
-    cells: cells
+    normals: normals,
+    uvs: uvs
   }
 }
