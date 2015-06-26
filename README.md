@@ -4,6 +4,8 @@
 
 ![screen](http://i.imgur.com/3otikog.png)
 
+[(demo)](http://glo-js.github.io/primitive-sphere/)
+
 A minimal UV sphere geometry for 3D rendering, including normals, UVs and cell indices. The algorithm has been adapted from [BabylonJS](https://github.com/BabylonJS/Babylon.js).
 
 ## Example
