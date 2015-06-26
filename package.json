@@ -25,7 +25,7 @@
   "scripts": {
     "build": "browserify demo.js | uglifyjs -cm > bundle.js",
     "test": "node test.js | faucet",
-    "start": "budo demo.js --live --verbose | garnish"
+    "start": "budo demo.js:bundle.js --live --verbose | garnish"
   },
   "keywords": [
     "sphere",
