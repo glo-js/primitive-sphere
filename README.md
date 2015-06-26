@@ -34,7 +34,7 @@ Creates a new UV sphere mesh with the given `radius` (default 1) and options:
 
 - `segments` number of segments to use, defaults to 32
 
-The returned mesh is a simplicial complex with the following data:
+The returned mesh is an object with the following data:
 
 ```
 {
