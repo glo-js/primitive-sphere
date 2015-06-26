@@ -14,13 +14,16 @@
     "gl-vec3": "^1.0.3"
   },
   "devDependencies": {
+    "browserify": "^10.2.4",
     "budo": "^4.1.0",
     "faucet": "0.0.1",
     "garnish": "^2.1.3",
-    "mesh-viewer": "^1.0.0",
-    "tape": "^4.0.0"
+    "glo-demo-primitive": "^1.0.2",
+    "tape": "^4.0.0",
+    "uglify-js": "^2.4.23"
   },
   "scripts": {
+    "build": "browserify demo.js | uglifyjs -cm > bundle.js",
     "test": "node test.js | faucet",
     "start": "budo demo.js --live --verbose | garnish"
   },

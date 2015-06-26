@@ -2,15 +2,15 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-![screen](http://i.imgur.com/AJt2r8l.png)
-
 A minimal UV sphere geometry for 3D rendering, including normals, UVs and cell indices. The algorithm has been adapted from [BabylonJS](https://github.com/BabylonJS/Babylon.js).
 
 ## Example
 
 ```js
 var radius = 1
-var mesh = require('primitive-sphere')(radius)
+var mesh = require('primitive-sphere')(radius, {
+  segments: 16
+})
 
 // the simplicial complex
 console.log(mesh.positions, mesh.cells)
@@ -24,7 +24,7 @@ console.log(mesh.normals)
 
 [![NPM](https://nodei.co/npm/primitive-sphere.png)](https://www.npmjs.com/package/primitive-sphere)
 
-#### `mesh = sphere(radius, opt)`
+#### `mesh = sphere(radius, [opt])`
 
 Creates a new UV sphere mesh with the given `radius` (default 1) and options:
 
@@ -32,6 +32,7 @@ Creates a new UV sphere mesh with the given `radius` (default 1) and options:
 
 ## See Also
 
+- [primitive-icosphere](https://www.npmjs.com/package/primitive-icosphere)
 - [sphere-mesh](https://www.npmjs.com/package/sphere-mesh) - numerically robust
 - [icosphere](https://www.npmjs.com/package/icosphere) - a simple icosphere simplicial complex
 
