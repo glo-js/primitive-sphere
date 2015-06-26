@@ -1,6 +1,6 @@
 {
   "name": "primitive-sphere",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a sphere mesh with normals, texture coordinates and indices",
   "main": "./primitive-sphere.js",
   "license": "MIT",
