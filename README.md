@@ -2,6 +2,8 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
+![screen](http://i.imgur.com/3otikog.png)
+
 A minimal UV sphere geometry for 3D rendering, including normals, UVs and cell indices. The algorithm has been adapted from [BabylonJS](https://github.com/BabylonJS/Babylon.js).
 
 ## Example
