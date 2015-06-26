@@ -34,6 +34,17 @@ Creates a new UV sphere mesh with the given `radius` (default 1) and options:
 
 - `segments` number of segments to use, defaults to 32
 
+The returned mesh is a simplicial complex with the following data:
+
+```
+{
+  positions: [ [x, y, z], [x, y, z], ... ],
+  cells: [ [a, b, c], [a, b, c], ... ],
+  uvs: [ [u, v], [u, v], ... ],
+  normals: [ [x, y, z], [x, y, z], ... ]
+}
+```
+
 ## See Also
 
 - [primitive-icosphere](https://www.npmjs.com/package/primitive-icosphere)
