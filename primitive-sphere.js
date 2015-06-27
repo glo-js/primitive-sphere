@@ -42,7 +42,7 @@ function primitiveSphere (radius, opt) {
       transformMat4(tmpVec3, up, matRotZ)
       transformMat4(tmpVec3, tmpVec3, matRotY)
 
-      scale(tmpVec3, tmpVec3, radius)
+      scale(tmpVec3, tmpVec3, -radius)
       positions.push(tmpVec3.slice())
 
       normalize(tmpVec3, tmpVec3)
@@ -54,7 +54,7 @@ function primitiveSphere (radius, opt) {
     if (zRotationStep > 0) {
       var verticesCount = positions.length
       var firstIndex = verticesCount - 2 * (totalYRotationSteps + 1)
-      for ( ; (firstIndex + totalYRotationSteps + 2) < verticesCount; firstIndex++) {
+      for (; (firstIndex + totalYRotationSteps + 2) < verticesCount; firstIndex++) {
         indices.push([
           firstIndex,
           firstIndex + 1,

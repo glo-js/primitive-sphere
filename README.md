@@ -2,6 +2,10 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
+![screen](http://i.imgur.com/3otikog.png)
+
+[(demo)](http://glo-js.github.io/primitive-sphere/)
+
 A minimal UV sphere geometry for 3D rendering, including normals, UVs and cell indices. The algorithm has been adapted from [BabylonJS](https://github.com/BabylonJS/Babylon.js).
 
 ## Example
@@ -29,6 +33,17 @@ console.log(mesh.normals)
 Creates a new UV sphere mesh with the given `radius` (default 1) and options:
 
 - `segments` number of segments to use, defaults to 32
+
+The returned mesh is an object with the following data:
+
+```
+{
+  positions: [ [x, y, z], [x, y, z], ... ],
+  cells: [ [a, b, c], [a, b, c], ... ],
+  uvs: [ [u, v], [u, v], ... ],
+  normals: [ [x, y, z], [x, y, z], ... ]
+}
+```
 
 ## See Also
 
