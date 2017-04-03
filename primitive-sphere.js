@@ -48,7 +48,7 @@ function primitiveSphere (radius, opt) {
       normalize(tmpVec3, tmpVec3)
       normals.push(tmpVec3.slice())
 
-      uvs.push([ normalizedY, 1 - normalizedZ ])
+      uvs.push([ normalizedY, normalizedZ ])
     }
 
     if (zRotationStep > 0) {
